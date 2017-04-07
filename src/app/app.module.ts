@@ -11,6 +11,8 @@ import { ProductdetailComponent } from './components/productdetail/productdetail
 import { ProfileComponent } from './components/profile/profile.component';
 import { CartComponent } from './components/cart/cart.component';
 
+import 'rxjs/add/operator/map';
+
 const appRoutes: Routes = [
   { path: '', component: ProductlistComponent },
   { path: 'productdetail', component: ProductdetailComponent },
