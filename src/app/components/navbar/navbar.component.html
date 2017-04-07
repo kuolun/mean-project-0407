@@ -20,8 +20,8 @@
             <span class="badge">0</span>
           </a>
         </li>
-        <li><a>LogIn</a></li>
-        <li><a>LogOut</a></li>
+        <li><a *ngIf="!_auth.authenticated()" (click)="_auth.login()">LogIn</a></li>
+        <li><a *ngIf="_auth.authenticated()" (click)="_auth.logout()">LogOut</a></li>
         <li><a [routerLink]="['/profile']">Profile</a></li>
       </ul>
     </div>
