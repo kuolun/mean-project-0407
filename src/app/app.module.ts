@@ -19,11 +19,10 @@ import 'rxjs/add/operator/map';
 
 const appRoutes: Routes = [
   { path: '', component: ProductlistComponent },
-  { path: 'productdetail', component: ProductdetailComponent },
+  { path: 'product/:id', component: ProductdetailComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
   { path: '**', redirectTo: '' }
-
 ];
 
 @NgModule({
