@@ -12,12 +12,25 @@ export class ProductdetailComponent implements OnInit {
 
   product;
 
+  quantity = 1;
+
   constructor(
     private _route: ActivatedRoute,
     private _http: Http,
     private _router: Router,
     private _auth: AuthService
   ) { }
+
+
+  changeQty(num) {
+    this.quantity += num;
+    if (this.quantity < 1) {
+      this.quantity = 1;
+    }
+  }
+
+
+
 
   ngOnInit() {
     //用URL上id取得product data

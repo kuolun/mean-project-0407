@@ -29,13 +29,13 @@
       <div class="row add-to-cart">
         <div class="col-md-5">
           <!--加號-->
-          <span class="btn btn-default btn-lg btn-qty">
+          <span (click)="changeQty(1)" class="btn btn-default btn-lg btn-qty">
               <span class="glyphicon glyphicon-plus"></span>
           </span>
           <!--數量-->
-          <span class="btn btn-default btn-lg btn-qty">數量</span>
+          <span class="btn btn-default btn-lg btn-qty">{{quantity}}</span>
           <!--減號-->
-          <span class="btn btn-default btn-lg btn-qty">
+          <span (click)="changeQty(-1)" class="btn btn-default btn-lg btn-qty">
               <span class="glyphicon glyphicon-minus "></span>
           </span>
         </div>
