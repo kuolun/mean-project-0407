@@ -41,8 +41,8 @@
         </div>
         <br>
         <!--按鈕-->
-        <div class="col-md-6">
-          <button class="btn btn-lg">Add to Cart</button>
+        <div class="col-md-6" *ngIf="_auth.authenticated()">
+          <button (click)="addToCart()" class="btn btn-lg">Add to Cart</button>
           <button class="btn btn-lg btn-info ">Check Out</button>
         </div>
       </div>

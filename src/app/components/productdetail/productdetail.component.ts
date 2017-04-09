@@ -40,6 +40,29 @@ export class ProductdetailComponent implements OnInit {
   }
 
 
+  addToCart() {
+
+    let cartData = this._auth.userProfile.data;
+
+    let item = {
+      product: this.product._id,
+      quantity: this.quantity,
+      subtotal: this.subtotal()
+    }
+
+    cartData.cart.push(item);
+    cartData.totalValue += this.subtotal();
+
+    //更新DB
+    this._http.put('http://localhost:3000/api/updateCart', {
+      newCart: cartData.cart,
+      newTotal: cartData.totalValue,
+      email: this._auth.userProfile.email
+    }).
+      subscribe(user => console.log(user));
+  }
+
+
 
   ngOnInit() {
     //用URL上id取得product data

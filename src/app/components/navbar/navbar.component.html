@@ -15,14 +15,14 @@
         <li><a [routerLink]="['/']">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li *ngIf="_auth.authenticated()">
           <a class="glyphicon glyphicon-shopping-cart">
-            <span class="badge">0</span>
+            <span class="badge">{{countItem()}}</span>
           </a>
         </li>
         <li><a *ngIf="!_auth.authenticated()" (click)="_auth.login()">LogIn</a></li>
         <li><a *ngIf="_auth.authenticated()" (click)="_auth.logout()">LogOut</a></li>
-        <li><a [routerLink]="['/profile']">Profile</a></li>
+        <li><a *ngIf="_auth.authenticated()" [routerLink]="['/profile']">Profile</a></li>
       </ul>
     </div>
     <!--/.nav-collapse -->

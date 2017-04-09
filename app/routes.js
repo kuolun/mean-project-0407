@@ -181,6 +181,23 @@ router.get('/user/:email', function (req, res, next) {
 });
 
 
+// 更新購物車內容
+router.put('/updateCart', function (req, res) {
+  User.findOne({
+    email: req.body.email
+  }, function (err, foundUser) {
+    foundUser.data.cart = req.body.newCart;
+    foundUser.data.totalValue = req.body.newTotal;
+    foundUser.save(function (err, savedUser) {
+      if (err) return next(err);
+      // 回傳save後的user
+      return res.json({
+        savedUser: savedUser
+      });
+    });
+  });
+});
+
 
 
 

@@ -15,6 +15,8 @@ export class AuthService {
 
   userProfile;
 
+
+
   lock = new Auth0Lock('WYZtNTzNCFi6UxHwStr8F1HgngOMnI5t', 'kuolun.auth0.com', {});
 
   constructor(private _http: Http, private _router: Router) {
@@ -53,6 +55,8 @@ export class AuthService {
             }
           });
       });
+
+
     });
   }
 
@@ -80,9 +84,9 @@ export class AuthService {
   }
 
   /**
- * 載入DB User資料
- * 把productId換成實際product資料
- */
+  * 載入DB User資料
+  * 把productId換成實際product資料
+  */
   loadUser(profile) {
     return this._http.get(`http://localhost:3000/api/user/${profile.email}`)
       .map(res => res.json());
