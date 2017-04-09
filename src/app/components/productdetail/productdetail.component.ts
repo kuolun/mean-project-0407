@@ -30,6 +30,15 @@ export class ProductdetailComponent implements OnInit {
   }
 
 
+  subtotal() {
+    return this.quantity * this.product.price
+  }
+
+
+  onBack() {
+    this._router.navigate(['/']);
+  }
+
 
 
   ngOnInit() {
