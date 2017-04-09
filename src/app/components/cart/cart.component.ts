@@ -1,6 +1,8 @@
 import { AuthService } from './../../shared/services/auth.service';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
+
+declare var StripeCheckout;
 
 @Component({
   selector: 'app-cart',
@@ -9,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
   user;
+
+  takePaymentResult;
 
   constructor(private _auth: AuthService, private _http: Http) { }
 
@@ -38,4 +42,52 @@ export class CartComponent implements OnInit {
       subscribe(user => console.info('updatedItem:', user));
   }
 
+  // 點pay button觸發，從stripe取回token
+  openCheckout() {
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_gYmq7G71sVayHcy4J8SjZHKA',
+      locale: 'auto',
+      token: token => this.takePayment(token)
+    }
+    );
+
+    console.log(this.user.data.totalValue);
+
+    handler.open({
+      name: 'Shop Smart Site',
+      description: 'Pay with Stripe',
+      amount: this.user.data.totalValue * 100,// cent
+      allowRememberMe: false
+    });
+  }
+
+  // 送token跟結帳金額給後端
+  takePayment(token) {
+    let body = {
+      tokenId: token.id,
+      amount: this.user.data.totalValue,
+      userEmail: token.email,
+      user: this.user
+    }
+
+    //把body轉成String
+    let bodyString = JSON.stringify(body);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    this._http.post('http://localhost:3000/api/stripepayment', bodyString, options)
+      .subscribe(
+      res => {
+        console.log('data:', res.json().status)
+        // 清空Service的cart資料
+        this.user.data.cart = [];
+        this.user.data.totalValue = 0;
+
+        //送出成功訊息
+        this.takePaymentResult = `Your payment process is completeted!! chargeId is ${res.json().id}`;
+      },
+      error => console.log(error.message),
+      () => console.log('Authentication Complete')
+      );
+  }
 }
