@@ -198,6 +198,25 @@ router.put('/updateCart', function (req, res) {
   });
 });
 
+// 移除購物車item
+router.put('/remove', function (req, res, next) {
+  User.findOne({
+    email: req.body.email
+  }, function (err, foundUser) {
+    console.log('foundUser:', foundUser);
+    console.log('body.updatedItem:', req.body.updatedItem);
+    // 用傳入的updatedItem.cart把原本的cart換掉
+    // 總金額也更新
+    foundUser.data.cart = req.body.updatedItem.cart;
+    foundUser.data.totalValue = req.body.updatedItem.totalValue;
+    foundUser.save(function (err, savedUser) {
+      console.log('save');
+      if (err) return next(err);
+      res.json(savedUser);
+    });
+  });
+});
+
 
 
 
